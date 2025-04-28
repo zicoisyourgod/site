@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flying Balloons</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        class Balloon {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height;
+                const colors = ['red', 'orange', 'yellow', 'green', 'black', 'blue', 'purple'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.diameter = 20;
+                this.speed = 1;
+                this.burstHeight = Math.random() * (canvas.height * 0.8); 
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.diameter / 2, 0, 2 * Math.PI);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.closePath();
+            }
+
+            update() {
+                this.y -= this.speed;）
+                this.diameter += 0.2; 
+                if (this.y <= this.burstHeight) {
+                    const index = balloons.indexOf(this);
+                    if (index > -1) {
+                        balloons.splice(index, 1);
+                    }
+                }
+            }
+        }
+
+        let balloons = [];
+        const numBalloons = 10;
+
+        function init() {
+            for (let i = 0; i < numBalloons; i++) {
+                balloons.push(new Balloon());
+            }
+            animate();
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < balloons.length; i++) {
+                balloons[i].draw();
+                balloons[i].update();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        window.onload = init;
+    </script>
+</body>
+
+</html>

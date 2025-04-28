@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <table id="tbl">
+        <tr><td>John Doe</td></tr>
+        <tr><td>Alice Smith</td></tr>
+        <tr><td>Bob Johnson</td></tr>
+    </table>
+    <script>
+        window.onload = sortbyfirstname;
+        let sortbyfirstname = function () {
+            let tbl = document.getElementById('tbl');
+            let rows = Array.from(tbl.rows).slice(1);
+            rows.sort((a, b) => {
+                let nameA = a.cells[0].innerHTML.split(' ')[0].toLowerCase();
+                let nameB = b.cells[0].innerHTML.split(' ')[0].toLowerCase();
+                if (nameA < nameB) return -1;
+                if (nameA > nameB) return 1;
+                return 0;
+            });
+            tbl.innerHTML = ''; 
+            rows.forEach(row => {
+                tbl.appendChild(row);
+            });
+        }
+    </script>
+</body>
+
+</html>
